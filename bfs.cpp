@@ -38,14 +38,11 @@ typedef function<void(node*)> Visitor;
 void
 breadth( node* src, Visitor f )
 {
-  set<node*> x;                   // in the end x has only white nodes
-                                  // during the process, it also stores
-                                  // the grey nodes
+  set<node*> x;                   // x is the set of black and grey nodes
 
   queue<node*> y;                 // y is the queue (FIFO) of grey nodes
 
-  y.push(src);
-  x.insert(src);
+  y.push(src); x.insert(src);     // at the beginning, the source is the only grey node
 
   while( !y.empty() )             // there are still grey nodes
   {
@@ -55,13 +52,13 @@ breadth( node* src, Visitor f )
 
     for( node* n : u->nei )       
     {
-      if( x.end() == x.find(n)){ // n is a black successor of u
-        y.push(n);               // n becomes grey
-        x.insert(n);             // n will be white once removed from y
+      if( x.end() == x.find(n) )  // n is a white successor of u
+      {                                 
+        y.push(n); x.insert(n);   // n becomes grey
       }
     }
-
-    y.pop();                      // u is now white
+    
+    y.pop();                      // u becomes black
   }
 }
 
