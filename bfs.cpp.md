@@ -104,7 +104,7 @@ findDistances( node* src, map<node*,size_t>* distances )
   // for a node we do not yet know a distance to the source
 
   function<size_t(node*)>
-  distance = [distances]( node* v )
+  distance = [&]( node* v )
   {
     map<node*,size_t>::iterator distIt = distances->find(v);
     if( distances->end() == distIt )
@@ -115,7 +115,7 @@ findDistances( node* src, map<node*,size_t>* distances )
   };
 
   Visitor
-  visit = [distances, distance]( node* v )
+  visit = [&]( node* v )
   {
     // distance from the source to the source is zero
     if( distances->empty() ) (*distances)[v] = 0;
