@@ -119,9 +119,6 @@ findDistances( node* src, map<node*,size_t>* distances )
   Visitor
   visit = [&]( node* v )
   {
-    // distance from the source to the source is zero
-    if( distances->empty() ) (*distances)[v] = 0;
-
     // update the shortest known distance to the
     // successors of the currently visited node
 
@@ -133,7 +130,10 @@ findDistances( node* src, map<node*,size_t>* distances )
       (*distances)[n] = min( nDist, 1 + vDist );
     }
   };
-
+  
+  // distance from the source to the source is zero
+  if( distances->empty() ) (*distances)[src] = 0;
+    
   breadth(src, visit);
 }
 ```
